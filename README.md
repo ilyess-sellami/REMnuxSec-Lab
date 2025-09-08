@@ -119,3 +119,35 @@ file malware.bin
 - Helps determine which **analysis tools** to use next (e.g., `oledump.py` for inspecting macros).
 
 - Safe static inspection without executing the malware.
+
+## 2.4 Execute `oledump.py` to Identify Macro Streams
+
+We use `oledump.py` to inspect the internal streams of the Word document. **This allows us to locate and analyze embedded macros**, which are often used by malware like Emotet.
+
+```bash
+oledump.py malware.bin
+```
+
+![Malware oledump output](/screenshots/oledump.png)
+
+**Explanation of Columns:**
+
+- **Stream number** → identifies the internal stream inside the OLE container.
+
+- **Size (bytes)** → size of the stream content.
+
+- **Stream name** → indicates the type or location of the content inside the document.
+
+**Meaning of `M` and `m`:**
+
+- **`M` (Uppercase)** → stream contains **macro code (VBA)**. These are potentially active and executable macros.
+
+- **`m` (Lowercase)** → stream contains **macro metadata or supporting macro structures**, not directly executable, but relevant to the macro project.
+
+**Why**:
+
+- Identifying `M` streams tells us **where malicious code is located**.
+
+- This allows the analyst to extract, inspect, and deobfuscate VBA code safely.
+
+- Helps in **mapping which macros could execute payloads** if the document is opened.
