@@ -89,3 +89,33 @@ d50d98dcc8b7043cb5c38c3de36a2ad62b293704e3cf23b0cd7450174df53fee
 - Once executed, Emotet can **download additional malware**, steal credentials, and propagate across networks.
 
 - The `Downloader/DOC.Emotet.S1072` tag indicates this sample is a **document-based downloader variant** used for spreading Emotet infections.
+
+### 2.3 View File Details
+
+We use the `file` command to inspect the malware sample and identify its type. This provides metadata without executing the file, which is **safe for initial analysis**.
+
+```bash
+file malware.bin
+```
+
+![Malware File Type](/screenshots/malware_file_type.png)
+
+**Explanation / Why**:
+
+- The file is identified as a **Microsoft Word document (Composite Document File V2)**.
+
+- Metadata shows it was created using Microsoft Word with the template `Normal.dotm`.
+
+- Creation and last saved timestamps are visible.
+
+- Number of pages, words, and characters give a quick overview of document content size.
+
+- Security: 0 indicates **no password protection**.
+
+**Importance**:
+
+- Confirms the file type matches what VirusTotal reported.
+
+- Helps determine which **analysis tools** to use next (e.g., `oledump.py` for inspecting macros).
+
+- Safe static inspection without executing the malware.
