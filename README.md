@@ -331,10 +331,10 @@ $toizluulufier = 'foqulevcaoj'
 ## 3. Malware Analysis Summary
 
 ### File Information
-- **Name:** malware.bin
-- **SHA256:** d50d98dcc8b7043cb5c38c3de36a2ad62b293704e3cf23b0cd7450174df53fee
-- **Type:** MS Word Document (Composite Document File V2)
-- **Malware Family:** Downloader/DOC.Emotet.S1072
+- **Name:** `malware.bin`
+- **SHA256:** `d50d98dcc8b7043cb5c38c3de36a2ad62b293704e3cf23b0cd7450174df53fee`
+- **Type:** `MS Word Document` (Composite Document File V2)
+- **Malware Family:** `Downloader/DOC.Emotet.S1072`
 
 ### Macro Analysis
 - Identified using `oledump.py`
