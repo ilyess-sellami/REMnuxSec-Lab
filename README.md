@@ -73,7 +73,7 @@ d50d98dcc8b7043cb5c38c3de36a2ad62b293704e3cf23b0cd7450174df53fee
 3. View File Details (In the `Details` section on VirusTotal), we see:
     - File type: MS Word Document (Knowing the file type helps select the correct analysis tools)
 
-![VirusTotal Malware File Type](/screenshots/malware_file_type.png)
+![VirusTotal Malware File Type](/screenshots/virustotal.png)
 
 4. View Malware Family (In the `Detection` section on VirusTotal):
     - `Downloader/DOC.Emotet.S1072`
