@@ -151,3 +151,71 @@ oledump.py malware.bin
 - This allows the analyst to extract, inspect, and deobfuscate VBA code safely.
 
 - Helps in **mapping which macros could execute payloads** if the document is opened.
+
+## 2.5 Analyze Macros with `olevba` and `oledump.py`
+
+Next, we analyze the macros embedded in the document to identify **potentially malicious code** such as Base64-encoded payloads.
+
+1. Scan the document with `olevba`
+
+`olevba` is a REMnux tool used to extract and detect suspicious macro activity, including encoded content.
+
+```bash
+olevba malware.bin
+```
+
+![Malware olevba output](/screenshots/olevba_suspicious_base64.png)
+
+**Output highlights:**
+
+- Suspicious activity detected: Base64 strings
+
+- Macro stream containing suspicious code: `Macros/roubhaol/109/0`
+
+**Why:**
+
+- Base64 strings are often used to obfuscate payloads inside macros.
+
+- Detecting them helps identify where the malicious code resides.
+
+2. Locate the Macro Stream with `oledump.py`
+
+We use `oledump.py` to confirm the stream number:
+
+```bash
+oledump.py malware.bin
+```
+
+![Malware base64 oledump](/screenshots/base64_macros_stream.png)
+
+**Relevant stream found:**
+
+```bash
+34: 15164 'Macros/roubhaol/109/0'
+```
+
+**Explanation:**
+
+- Stream `34` contains **the actual macro code with Base64-encoded content**.
+
+- This stream is flagged by `olevba` as suspicious.
+
+3. Extract and View Base64 Code:
+
+To inspect the macro stream content, use `oledump.py` with the `-s` (stream) and `-S` (show raw content) options:
+
+```bash
+oledump.py -s 34 -S malware.bin
+```
+
+![Malware Base64 content](/screenshots/base64_content.png)
+
+**Output:**
+
+- Displays the **Base64-encoded** string embedded in the macro.
+
+**Why:**
+
+- Extracting Base64 allows us to **decode and analyze the hidden payload** safely.
+
+- This is a key step in **understanding what the malware will do** if executed.
