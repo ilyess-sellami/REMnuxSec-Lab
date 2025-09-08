@@ -41,6 +41,17 @@ Before beginning analysis, create a snapshot:
 
 ---
 
+## 2. Analyze Malware
+
+### Generate SHA256 Hash
+
+We first generate the `SHA256` hash of the malware file. This **ensures we have a unique fingerprint for the file**, which is useful for tracking, verification, and searching in threat intelligence databases.
+
+```bash
+sha256sum malware.bin
+```
+
+![Generate SHA256 Hash value](/screenshots/hash_value.png)
 
 
 
