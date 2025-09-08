@@ -1,13 +1,13 @@
 # REMnuxSec-Lab
+
 🛡️ REMnuxSec-Lab – A malware analysis lab using `REMnux` for **static malware analysis**. Includes setup instructions, safe practices, and guided analysis of a malware sample (malware.bin).
 
 ---
 
 ## Disclaimer
 
-This project is for **educational and research purposes only**.  
-Do not upload or distribute live malware in this repository.  
-Always perform analysis in a **virtualized, isolated environment**.
+- This project is for **educational and research purposes only**.  
+- Always perform analysis in a **virtualized, isolated environment**.
 
 ---
 
