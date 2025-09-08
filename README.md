@@ -328,7 +328,7 @@ $toizluulufier = 'foqulevcaoj'
 
 ---
 
-## Malware Analysis Summary
+## 3. Malware Analysis Summary
 
 ### File Information
 - **Name:** malware.bin
@@ -356,5 +356,4 @@ $toizluulufier = 'foqulevcaoj'
 - Downloads and runs Emotet malware
 - Can steal credentials, drop additional malware, and propagate across networks
 
---- 
 
