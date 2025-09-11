@@ -82,7 +82,7 @@ d50d98dcc8b7043cb5c38c3de36a2ad62b293704e3cf23b0cd7450174df53fee
 
 **About this malware family**:
 
-- Emotet is a well-known **banking Trojan and malware downloader**.
+- **Emotet** is a well-known **banking Trojan and malware downloader**.
 
 - It often spreads via **malicious Word or Excel documents** with macros.
 
